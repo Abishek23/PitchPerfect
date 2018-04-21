@@ -42,14 +42,16 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
         }
     }
     
-    func playSound(rate: Float? = nil, pitch: Float? = nil, echo: Bool = false, reverb: Bool = false) {
+    func playSound(rate: Float? = nil, pitch: Float? = nil, echo: Bool = false, reverb: Bool = false) -> TimeInterval{
         
         // initialize audio engine components
         audioEngine = AVAudioEngine()
         
         // node for playing audio
         audioPlayerNode = AVAudioPlayerNode()
+        
         audioEngine.attach(audioPlayerNode)
+        
         
         // node for adjusting rate/pitch
         let changeRatePitchNode = AVAudioUnitTimePitch()
@@ -107,11 +109,16 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
             try audioEngine.start()
         } catch {
             showAlert(Alerts.AudioEngineError, message: String(describing: error))
-            return
+            return 0
         }
         
         // play the recording!
         audioPlayerNode.play()
+        
+        let duration =  Double(Double(audioFile.length)/44100)
+        let roundedDuration = Double(round(100*duration)/100)
+        return roundedDuration
+       
     }
     
     @objc func stopAudio() {
@@ -167,4 +174,8 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
         alert.addAction(UIAlertAction(title: Alerts.DismissAlert, style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+
+    // MARK: AVAudioPlayerDelegate
+
+
 }

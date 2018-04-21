@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 class PlaySoundsViewController: UIViewController {
     var recordedAudioURL:URL!
+    @IBOutlet weak var selectFilterLabel: UILabel!
     @IBOutlet weak var snailButton:UIButton!
     @IBOutlet weak var chipmunkButton:UIButton!
     @IBOutlet weak var rabbitButton:UIButton!
@@ -17,7 +18,8 @@ class PlaySoundsViewController: UIViewController {
     @IBOutlet weak var echoButton:UIButton!
     @IBOutlet weak var reverbButton:UIButton!
     @IBOutlet weak var stopButton:UIButton!
-  
+    @IBOutlet weak var durationLabel: UILabel!
+    
     var audioFile:AVAudioFile!
     var audioEngine:AVAudioEngine!
     var audioPlayerNode: AVAudioPlayerNode!
@@ -28,20 +30,20 @@ class PlaySoundsViewController: UIViewController {
     }
     @IBAction func playSoundForButton(_ sender:UIButton) {
         print("play Sound Button Pressed")
-      
+        
         switch ButtonType(rawValue: sender.tag)!{
         case.slow:
-            playSound(rate:0.5)
+            durationLabel.text = "Duration:\(playSound(rate:0.5))"
         case .fast:
-            playSound(rate:1.5)
+            durationLabel.text = "Duration:\(playSound(rate:1.5))"
         case.chipmunk:
-            playSound( pitch: 1000)
+            durationLabel.text = "Duration:\(playSound( pitch: 1000))"
         case .vader:
-            playSound(pitch:-1000)
+            durationLabel.text = "Duration:\(playSound(pitch:-1000))"
         case .echo:
-            playSound(echo:true)
+            durationLabel.text = "Duraiton:\(playSound(echo:true))"
         case .reverb:
-            playSound(reverb:true)
+          durationLabel.text = "Duration\(playSound(reverb:true))"
    
         }
     }
@@ -53,11 +55,18 @@ class PlaySoundsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAudio()
+   
 
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        configureUI(.notPlaying)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        stopAudio()
         configureUI(.notPlaying)
     }
 
