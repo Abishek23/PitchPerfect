@@ -27,7 +27,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
        
             tapToRecordLabel.text = "Tap To Record"
             audioRecorder.stop()
-              recordButton.setImage(#imageLiteral(resourceName: "Record"), for: .normal)
+            recordButton.setImage(#imageLiteral(resourceName: "Record"), for: .normal)
             
         }
     }
