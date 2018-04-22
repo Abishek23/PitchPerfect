@@ -24,7 +24,6 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             
         } else {
             print("Stop recording button pressed")
-       
             tapToRecordLabel.text = "Tap To Record"
             audioRecorder.stop()
             recordButton.setImage(#imageLiteral(resourceName: "Record"), for: .normal)
@@ -64,8 +63,8 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     @IBAction func recordAudio(_ sender: Any) {
-       
-    isRecording = !isRecording
+
+        isRecording = !isRecording
     handleRecording(isRecording: isRecording)
       
    
